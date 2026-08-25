@@ -1,0 +1,223 @@
+#:import ButtonBehavior kivy.uix.behaviors.ButtonBehavior
+
+<TableLayout>:
+    orientation: "vertical"
+    padding: 20
+    spacing: 15
+
+    # -----------------------------
+    # TOP: INPUT AREA (2 columns)
+    # -----------------------------
+    GridLayout:
+        cols: 2
+        spacing: 15, 2
+        size_hint_y: None
+        height: "140dp"
+
+        Label:
+            text: "Coating Speed [rpm]"
+            bold: True
+            size_hint_y: None
+            height: "24dp"
+
+        Label:
+            text: "Thickness [nm]"
+            bold: True
+            size_hint_y: None
+            height: "24dp"
+
+        # RPM INPUT
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+            height: "90dp"
+            spacing: 0
+
+            Slider:
+                id: rpm_slider
+                min: 1000
+                max: 6000
+                step: 1
+                value: 2000
+                on_value: root.on_rpm_slider(self.value)
+
+            BoxLayout:
+                size_hint_y: None
+                height: "36dp"
+                spacing: 5
+
+                Label:
+                    text: "rpm:"
+                    size_hint_x: None
+                    width: "100dp"
+
+                TextInput:
+                    id: rpm_input
+                    text: str(int(rpm_slider.value))
+                    multiline: False
+                    input_filter: "int"
+                    halign: "center"
+                    on_text_validate: root.on_rpm_text(self.text)
+                    on_focus: if not self.focus: root.on_rpm_text(self.text)
+
+        # TH INPUT
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+            height: "90dp"
+            spacing: 0
+
+            Slider:
+                id: th_slider
+                min: 40
+                max: 200
+                step: 1
+                value: 100
+                on_value: root.on_th_slider(self.value)
+
+            BoxLayout:
+                size_hint_y: None
+                height: "36dp"
+                spacing: 5
+
+                Label:
+                    text: "Thickness:"
+                    size_hint_x: None
+                    width: "100dp"
+
+                TextInput:
+                    id: th_input
+                    text: str(int(th_slider.value))
+                    multiline: False
+                    input_filter: "int"
+                    halign: "center"
+                    on_text_validate: root.on_th_text(self.text)
+                    on_focus: if not self.focus: root.on_th_text(self.text)
+
+
+    # -----------------------------
+    # BUTTON BAR
+    # -----------------------------
+    BoxLayout:
+        size_hint_y: None
+        height: "50dp"
+        spacing: 10
+
+        Button:
+            text: "Add"
+            on_press: root.add_entry()
+
+        Button:
+            text: "Update\nSelected"
+            on_press: root.update_values()
+
+        Button:
+            text: "Delete"
+            #color: (0.86, 0.16, 0.11, 1)
+            #background_normal: ''
+            #background_color: (1, 0.0, 0.0, 1)
+            on_press: root.delete_selected()
+
+        Button:
+            text: "Plot"
+            color: (0, 0, 0, 1)
+            background_normal: ''
+            #background_color: (0.2, 0.6, 0.3, 1)
+            background_color: (0,0.7,1,1)
+            #background_color: (0,0.8,0.3,1)
+            on_press: root.show_plot()
+
+        Button:
+            text: "Calculate\n& Plot"
+            #color: (0, 0, 0, 1)
+            background_normal: ''
+            #background_color: (0.6, 0.2, 0.7, 1)
+            background_color: (1, 0.0, 0.0, 1)
+            #background_color: (0.12, 0.83, 0, 1)
+            on_press: root.show_target_input()
+
+
+    # -----------------------------
+    # TABLE HEADER
+    # -----------------------------
+    BoxLayout:
+        size_hint_y: None
+        height: "50dp"      #"30dp"
+        spacing: 20
+
+        canvas.before:
+            Color:
+                #rgba: (0.75, 0.75, 0.75, 1)
+                #rgba: (0.95, 0.97, 0.367, 0.8)
+                #rgba: (0.811, 1.0, 0.016, 1)
+                #rgba: (0.97, 1.0, 0.0, 1)
+                rgba: (1, 0.98, 0.71, 1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Coating Speed [rpm]"
+            bold: True
+            color: (0, 0, 0, 1)
+
+        Label:
+            text: "Thickness"
+            bold: True
+            color: (0, 0, 0, 1)
+
+
+    # -----------------------------
+    # SCROLLABLE TABLE
+    # -----------------------------
+    RecycleView:
+        data: root.table_data
+        viewclass: "TableRow"
+        size_hint_y: 1
+
+        RecycleBoxLayout:
+            default_size: None, 60      #40
+            default_size_hint: 1, None
+            size_hint_y: None
+            height: self.minimum_height
+            orientation: "vertical"
+
+
+# -----------------------------
+# ROW DEFINITION
+# -----------------------------
+<TableRow@ButtonBehavior+BoxLayout>:
+    rpm_text: ""
+    th_text: ""
+    index: -1
+    selected: False
+
+    size_hint_y: None
+    height: "40dp"
+    spacing: 20
+    padding: 5
+
+    canvas.before:
+        Color:
+            rgba:
+                (0.82, 0.82, 0.82, 1) if self.index % 2 == 0 else (1, 1, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+        Color:
+            rgba: (0.2, 0.5, 1, 0.35) if root.selected else (0, 0, 0, 0)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    on_press:
+        if root.index >= 0: app.root.select_row(root.index)
+
+    Label:
+        text: root.rpm_text
+        color: (0, 0, 0, 1)
+
+    Label:
+        text: root.th_text
+        color: (0, 0, 0, 1)
