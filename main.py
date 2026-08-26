@@ -1,5 +1,5 @@
-## Code/Plot with kivy.graphics not matplotlib ##
-#################################################
+## Code/Plot with kivy.graphics not compatible with matplotlib ##
+#################################################################
 
 import numpy as np
 
