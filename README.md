@@ -35,7 +35,6 @@ The app allows you to collect coating speed (RPM) and film thickness (nm) data p
 ```
 kivy==2.3.0
 numpy
-pandas
 ```
 
 ### For Android build
