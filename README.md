@@ -25,9 +25,7 @@ The app allows you to collect coating speed (RPM) and film thickness (nm) data p
 
 ## Screenshots
 
-#![Spin Calculator Screenshot](Screenshot.png)
-
-<img src="Screenshot.png" width="300"/>
+<img src="Screenshot.png" width="400"/>
 
 ---
 
