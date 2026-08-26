@@ -23,7 +23,7 @@ The app allows you to collect coating speed (RPM) and film thickness (nm) data p
 
 ---
 
-## Screenshots
+## Screenshot
 
 <img src="Screenshot.png" width="400"/>
 
