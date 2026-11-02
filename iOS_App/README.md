@@ -28,11 +28,17 @@ This app is written in **Swift / SwiftUI** and is the iOS counterpart of the And
 ---
 
 ## Screenshot
-<img src="Screenshot_1.png" width="300"/>
+<img src="iOS_SC_1.png" width="300"/>
 
-<img src="Screenshot_2.png" width="300"/>
+<img src="iOS_SC_2.png" width="300"/>
 
-<img src="Screenshot_3.png" width="300"/>
+<img src="iOS_SC_3.png" width="300"/>
+
+<img src="iOS_SC_4.png" width="300"/>
+
+<img src="iOS_SC_5.png" width="300"/>
+
+<img src="iOS_SC_6.png" width="300"/>
 
 ---
 
